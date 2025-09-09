@@ -39,7 +39,7 @@ export default function Header() {
         </SignedIn>
 
         <SignedOut>
-          <NavLink href="/upsign-inload">Sign In</NavLink>
+          <NavLink href="/sign-in">Sign In</NavLink>
         </SignedOut>
       </div>
     </nav>

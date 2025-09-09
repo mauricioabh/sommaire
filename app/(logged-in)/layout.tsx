@@ -11,7 +11,7 @@ export default async function LoggedInLayout({
   const user = await currentUser();
 
   if (!user?.id) {
-    return redirect("/sign-in");
+    return redirect("/");
   }
 
   if (user?.id) {
