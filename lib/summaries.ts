@@ -1,14 +1,22 @@
 import { getDbConnection } from "./db";
 
+function mapSummary(s: any) {
+  return { ...s, createdAt: s.created_at };
+}
+
 export async function getSummaries(userId: string) {
   const sql = await getDbConnection();
   const summaries =
     await sql`SELECT * FROM pdf_summaries WHERE user_id = ${userId} ORDER BY created_at DESC`;
-  console.log(summaries);
-  return summaries.map((s: any) => ({
-    ...s,
-    createdAt: s.created_at,
-  }));
+  return summaries.map(mapSummary);
+}
+
+export async function getSummaryById(userId: string, id: string) {
+  const sql = await getDbConnection();
+  const rows =
+    await sql`SELECT * FROM pdf_summaries WHERE user_id = ${userId} AND id = ${id}`;
+  if (!rows?.length) return null;
+  return mapSummary(rows[0]);
 }
 
 export async function getUserUploadCount(userId: string) {
