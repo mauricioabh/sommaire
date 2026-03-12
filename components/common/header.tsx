@@ -4,11 +4,10 @@ import NavLink from "./nav-link";
 import {
   SignedIn,
   SignedOut,
-  SignInButton,
-  SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
 import PlanBadge from "./plan-badge";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -30,7 +29,9 @@ export default function Header() {
       <div className="flex lg:justify-end lg:flex-1">
         <SignedIn>
           <div className="flex gap-2 items-center">
-            <NavLink href="/upload">Upload a PDF</NavLink>
+            <Button asChild className="bg-linear-to-r from-rose-500 to-rose-700 hover:from-rose-600 hover:to-rose-800 text-white hover:no-underline transition-all duration-300">
+              <Link href="/upload">Upload to PDF</Link>
+            </Button>
             <PlanBadge></PlanBadge>
             <SignedIn>
               <UserButton />

@@ -1,17 +1,16 @@
 ---
-description: Tras push a git, monitorear el build de Vercel y dar feedback al usuario (éxito/fallo, URL, logs).
+description: Tras push a git, esperar el build de Vercel en bucle hasta READY/ERROR y solo entonces dar feedback (éxito o fallo).
 alwaysApply: true
 ---
 
 # Monitoreo de deploy en Vercel tras push
 
-**Obligatorio:** Cada vez que se haga **push a git** en este proyecto (lo pida el usuario o lo haga el agente como parte de una tarea), debes **monitorear el build en Vercel hasta que termine** y dar feedback al usuario. No hace falta que el usuario lo pida; es parte del flujo tras cada push.
+**Obligatorio:** Tras **cada push a git** en este proyecto, debes **esperar a que el build termine** (en bucle) y **solo entonces** responder al usuario con éxito o fallo. No respondas antes con "está construyendo" y un enlace.
 
-1. **Inmediatamente después del push**: usar Vercel MCP para seguir el deploy.
-2. **Obtener el último deploy**: `list_deployments` con projectId `prj_7vPAuQxWmw5078d2DZA1qz1niut5` y teamId `team_hUSsjGJ9wvJ5FY0nHaZlJUkp`. El primer elemento es el deploy recién disparado.
-3. **Monitorear hasta terminar**: con `get_deployment` (id del deploy), consultar cada ~15–20 segundos hasta que `state` sea `READY`, `ERROR` o `CANCELED`. No des por terminada la tarea sin haber esperado el resultado.
-4. **Dar feedback al usuario**:
-   - **READY**: indicar éxito, URL del deployment y enlace al Inspector.
-   - **ERROR**: indicar fallo, enlace al Inspector y usar `get_deployment_build_logs` para incluir el motivo del fallo en el mensaje al usuario.
+1. **Tras el push**: obtener el último deploy con `list_deployments` (projectId `prj_7vPAuQxWmw5078d2DZA1qz1niut5`, teamId `team_hUSsjGJ9wvJ5FY0nHaZlJUkp`). El primer elemento es el recién disparado.
+2. **Bucle obligatorio**: mientras `state` sea `BUILDING` o `QUEUED`, esperar 15–20 segundos (p. ej. `Start-Sleep -Seconds 18` en PowerShell), llamar `get_deployment` con ese id, y repetir hasta que `state` sea `READY`, `ERROR` o `CANCELED`. No salgas del flujo ni respondas al usuario hasta tener un estado final.
+3. **Solo al terminar**, dar feedback:
+   - **READY**: éxito, URL de producción y enlace al Inspector.
+   - **ERROR** o **CANCELED**: fallo, enlace al Inspector y (si ERROR) `get_deployment_build_logs` para incluir el motivo en el mensaje.
 
 Si no tienes projectId/teamId, usar antes `list_teams` y `list_projects`.
