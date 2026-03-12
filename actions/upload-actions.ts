@@ -39,12 +39,10 @@ export async function generatePdfSummary(
 
   console.log("UPLOAD RESPONSE: ", uploadResponse);
 
-  const {
-    serverData: {
-      userId,
-      file: { url: pdfUrl, name: fileName },
-    },
-  } = uploadResponse[0];
+  const first = uploadResponse[0];
+  const serverData = first?.serverData;
+  const pdfUrl = serverData?.file?.url ?? (first as { url?: string })?.url;
+  const fileName = serverData?.file?.name ?? (first as { name?: string })?.name ?? "document.pdf";
 
   if (!pdfUrl) {
     return {

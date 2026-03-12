@@ -104,7 +104,30 @@ export default function UploadForm() {
 
       //parse pdf using langchain
       console.log("RESP: ", resp);
-      const result = await generatePdfSummary([resp[0]]);
+      const first = resp[0];
+      const fileUrl =
+        first?.serverData?.file?.url ?? (first as { url?: string })?.url;
+      if (!fileUrl) {
+        toast(
+          <div>
+            <strong>❌ Upload incomplete</strong>
+            <div>Could not get file URL. Please try again.</div>
+          </div>
+        );
+        setIsLoading(false);
+        return;
+      }
+      const result = await generatePdfSummary([
+        {
+          serverData: {
+            userId: first?.serverData?.userId ?? "",
+            file: {
+              url: fileUrl,
+              name: first?.name ?? file.name,
+            },
+          },
+        },
+      ]);
       console.log({ result });
 
       const { data = null, message = null } = result || {};
@@ -120,7 +143,7 @@ export default function UploadForm() {
 
         if (data.summary) {
           storeResult = await storePdfSummaryAction({
-            fileUrl: resp[0].serverData.file.url,
+            fileUrl,
             summary: data.summary,
             title: data.title,
             fileName: file.name,

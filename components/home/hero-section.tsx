@@ -20,7 +20,7 @@ export default function HeroSection() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="relative mx-auto flex flex-col z-0 items-center justify-center py-16 sm:py-20 lg:pb-28 transition-all animate-in lg:px-12 max-w-7xl"
+      className="relative mx-auto flex flex-col z-0 items-center justify-center py-8 sm:py-12 lg:pb-16 transition-all animate-in lg:px-12 max-w-7xl"
     >
       <MotionDiv
         variants={itemVariants}
@@ -34,7 +34,10 @@ export default function HeroSection() {
           <p className="text-base text-rose-600">Powered by AI</p>
         </Badge>
       </MotionDiv>
-      <MotionH1 variants={itemVariants} className="font-bold py-16 text-center">
+      <MotionH1
+        variants={itemVariants}
+        className="font-bold py-8 text-center text-3xl sm:text-4xl lg:text-5xl"
+      >
         Transform PDFs into
         <span className="relative inline-block">
           <span className="relative z-10 px-2">concise</span>
@@ -47,14 +50,14 @@ export default function HeroSection() {
       </MotionH1>
       <MotionH2
         variants={itemVariants}
-        className="text-lg sm:text-xl lg:text-2xl text-center px-4 lg:px-0 lg:max-w-4xl text-gray-600"
+        className="text-base sm:text-lg lg:text-xl text-center px-4 lg:px-0 lg:max-w-4xl text-gray-600"
       >
         Get a beautiful summary reel of the document in seconds.
       </MotionH2>
       <MotionDiv variants={itemVariants} whileHover={buttonVariants}>
         <Button
           variant={"link"}
-          className="text-white mt-6 text-base sm:text-lg lg:text-xl rounded-full px-8 sm:px-10 lg:px-12 py-6 sm:py-7 lg:py-8 lg:mt-16 bg-linear-to-r from-slate-900 to-rose-500 hover:from-rose-500 hover:to-slate-900 hover:no-underline font-bold shadow-lg transition-all duration-300"
+          className="text-white mt-4 text-base sm:text-lg lg:text-xl rounded-full px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 lg:mt-8 bg-linear-to-r from-slate-900 to-rose-500 hover:from-rose-500 hover:to-slate-900 hover:no-underline font-bold shadow-lg transition-all duration-300"
         >
           <Link href="/#pricing" className="flex gap-2 items-center">
             <span>Try Sommaire</span>

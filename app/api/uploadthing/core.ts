@@ -10,7 +10,10 @@ const f = createUploadthing();
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   
-  pdfUploader: f({ pdf: { maxFileSize: '32MB' }})
+  pdfUploader: f(
+    { pdf: { maxFileSize: '32MB' } },
+    { awaitServerData: true }
+  )
   .middleware(async ({ req }) => {
     // get user info
     const user = await currentUser();

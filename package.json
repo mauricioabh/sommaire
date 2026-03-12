@@ -18,7 +18,7 @@
     "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.2",
-    "@uploadthing/react": "^7.3.1",
+    "@uploadthing/react": "^7.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -33,7 +33,7 @@
     "sonner": "^2.0.5",
     "stripe": "^18.3.0",
     "tailwind-merge": "^3.2.0",
-    "uploadthing": "^7.7.2",
+    "uploadthing": "^7.7.4",
     "zod": "^3.25.51"
   },
   "devDependencies": {
