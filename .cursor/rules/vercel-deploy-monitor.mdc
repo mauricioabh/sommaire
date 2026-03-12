@@ -1,0 +1,17 @@
+---
+description: Tras push a git, monitorear el build de Vercel y dar feedback al usuario (éxito/fallo, URL, logs).
+alwaysApply: true
+---
+
+# Monitoreo de deploy en Vercel tras push
+
+Cuando el usuario haga **push a git** (o pida "deploy a Vercel" / "push y revisar Vercel"):
+
+1. **Después del push**: usar las herramientas de Vercel MCP para seguir el deploy.
+2. **Listar el último deploy**: `list_deployments` con el `projectId` y `teamId` del proyecto (sommaire: `prj_7vPAuQxWmw5078d2DZA1qz1niut5`, team: `team_hUSsjGJ9wvJ5FY0nHaZlJUkp`). El primer elemento es el deploy más reciente.
+3. **Monitorear hasta terminar**: con `get_deployment` (id o URL del deploy), consultar cada ~15–20 segundos hasta que `state` sea `READY`, `ERROR` o `CANCELED`.
+4. **Dar feedback al usuario**:
+   - **READY**: indicar éxito, enlace al deployment (ej. `https://sommaire-xxx.vercel.app`) y al Inspector de Vercel si aplica.
+   - **ERROR**: indicar fallo, enlace al Inspector y opcionalmente usar `get_deployment_build_logs` para pegar o resumir los logs relevantes del build.
+
+Si no conoces projectId/teamId, usar antes `list_teams` y `list_projects` con ese team para obtener el proyecto correcto.
