@@ -21,7 +21,7 @@ export default async function SummaryPage({
   return (
     <main className="min-h-screen">
       <div className="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
-        <Button variant="ghost" asChild className="mb-6 -ml-2">
+        <Button variant="ghost" asChild className="mb-6 -ml-2 hover:bg-gray-100 hover:text-gray-800">
           <Link href="/dashboard" className="flex items-center gap-2 text-gray-600">
             <ArrowLeft className="w-4 h-4" />
             Your summaries
