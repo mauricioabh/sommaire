@@ -83,9 +83,12 @@ export async function generatePdfSummary(
       },
     };
   } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "File upload failed";
+    console.error("generatePdfSummary error:", error);
     return {
       success: false,
-      message: "File upload failed",
+      message: `PDF processing failed: ${message}`,
       data: null,
     };
   }

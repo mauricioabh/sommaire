@@ -132,6 +132,15 @@ export default function UploadForm() {
 
       const { data = null, message = null } = result || {};
 
+      if (!data && message) {
+        toast(
+          <div>
+            <strong>❌ Error</strong>
+            <div>{message}</div>
+          </div>
+        );
+      }
+
       if (data) {
         let storeResult: any;
         toast(
