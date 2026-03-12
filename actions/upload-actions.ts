@@ -60,8 +60,13 @@ export async function generatePdfSummary(
     try {
       summary = await generateSummaryFromGemini(pdfText);
     } catch (error) {
-      console.error("Gemini API failed after quote exceeded");
-      throw new Error("Failed to generate summary with available AI providers");
+      const msg = error instanceof Error ? error.message : String(error);
+      console.error("[generatePdfSummary] AI provider failed — full error:", error);
+      console.error("[generatePdfSummary] error.message:", msg);
+      if (error instanceof Error && error.stack) {
+        console.error("[generatePdfSummary] stack:", error.stack);
+      }
+      throw new Error(msg);
     }
 
     if (!summary) {
@@ -84,8 +89,12 @@ export async function generatePdfSummary(
     };
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "File upload failed";
-    console.error("generatePdfSummary error:", error);
+      error instanceof Error ? error.message : String(error);
+    console.error("[generatePdfSummary] outer catch — full error:", error);
+    console.error("[generatePdfSummary] returned message to client:", message);
+    if (error instanceof Error && error.stack) {
+      console.error("[generatePdfSummary] stack:", error.stack);
+    }
     return {
       success: false,
       message: `PDF processing failed: ${message}`,
