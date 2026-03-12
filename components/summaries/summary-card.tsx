@@ -62,7 +62,7 @@ export default function SummaryCard({ summary }: { summary: any }) {
               createdAt={summary.createdAt}
               formatFileName={summary.formatFileName}
             />
-            <p className="text-gray-600 line-clamp-2 text-sm sm:text-base pl-2">
+            <p className="text-gray-600 line-clamp-4 text-sm sm:text-base pl-2">
               {summary.summary_text}
             </p>
 
