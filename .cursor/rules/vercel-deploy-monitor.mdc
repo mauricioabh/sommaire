@@ -5,13 +5,13 @@ alwaysApply: true
 
 # Monitoreo de deploy en Vercel tras push
 
-Cuando el usuario haga **push a git** (o pida "deploy a Vercel" / "push y revisar Vercel"):
+**Obligatorio:** Cada vez que se haga **push a git** en este proyecto (lo pida el usuario o lo haga el agente como parte de una tarea), debes **monitorear el build en Vercel hasta que termine** y dar feedback al usuario. No hace falta que el usuario lo pida; es parte del flujo tras cada push.
 
-1. **Después del push**: usar las herramientas de Vercel MCP para seguir el deploy.
-2. **Listar el último deploy**: `list_deployments` con el `projectId` y `teamId` del proyecto (sommaire: `prj_7vPAuQxWmw5078d2DZA1qz1niut5`, team: `team_hUSsjGJ9wvJ5FY0nHaZlJUkp`). El primer elemento es el deploy más reciente.
-3. **Monitorear hasta terminar**: con `get_deployment` (id o URL del deploy), consultar cada ~15–20 segundos hasta que `state` sea `READY`, `ERROR` o `CANCELED`.
+1. **Inmediatamente después del push**: usar Vercel MCP para seguir el deploy.
+2. **Obtener el último deploy**: `list_deployments` con projectId `prj_7vPAuQxWmw5078d2DZA1qz1niut5` y teamId `team_hUSsjGJ9wvJ5FY0nHaZlJUkp`. El primer elemento es el deploy recién disparado.
+3. **Monitorear hasta terminar**: con `get_deployment` (id del deploy), consultar cada ~15–20 segundos hasta que `state` sea `READY`, `ERROR` o `CANCELED`. No des por terminada la tarea sin haber esperado el resultado.
 4. **Dar feedback al usuario**:
-   - **READY**: indicar éxito, enlace al deployment (ej. `https://sommaire-xxx.vercel.app`) y al Inspector de Vercel si aplica.
-   - **ERROR**: indicar fallo, enlace al Inspector y opcionalmente usar `get_deployment_build_logs` para pegar o resumir los logs relevantes del build.
+   - **READY**: indicar éxito, URL del deployment y enlace al Inspector.
+   - **ERROR**: indicar fallo, enlace al Inspector y usar `get_deployment_build_logs` para incluir el motivo del fallo en el mensaje al usuario.
 
-Si no conoces projectId/teamId, usar antes `list_teams` y `list_projects` con ese team para obtener el proyecto correcto.
+Si no tienes projectId/teamId, usar antes `list_teams` y `list_projects`.
